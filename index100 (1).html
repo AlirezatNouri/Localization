@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDOA Computation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fantasy&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Fantasy', cursive;
+            font-size: 20px; /* Increase the default font size */
+            text-align: center;
+            background-color: #f5e8d7; /* Cream color */
+        }
+
+        h1 {
+            margin-top: 50px;
+            color: #595959; /* Gentle gray color */
+            font-size: 60px; /* Increased size for header */
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 25px 30px; /* Bigger button */
+            font-size: 30px; /* Bigger font inside button */
+            background-color: #8e8e8e; /* Gentle gray for button */
+            color: #f5e8d7; /* Cream color for text inside button */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #6e6e6e; /* Slightly darker gray for hover */
+        }
+
+        #results p {
+            margin-top: 25px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>TDOA Localization</h1>
+
+<button id="computeBtn">Compute Distances</button>
+
+<div id="results">
+    <p>Distance to Microphone 1: <span id="distance1"></span> cm</p>
+    <p>Distance to Microphone 2: <span id="distance2"></span> cm</p>
+    <p>Distance Difference between Microphones: <span id="difference"></span> cm</p>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $("#computeBtn").click(function() {
+            $.post("http://127.0.0.1:5000/compute_distances", function(data) {
+                $("#distance1").text(data.distance_to_microphone_1.toFixed(2));
+                $("#distance2").text(data.distance_to_microphone_2.toFixed(2));
+                $("#difference").text(data.distance_difference_between_microphones.toFixed(2));
+            });
+        });
+    });
+</script>
+
+</body>
+
+</html>
